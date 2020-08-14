@@ -23,27 +23,68 @@ namespace Sudoku
                 {0,7,0,0,1,2,0,0,0}
             };
 
-            print(board);
+            int[,] boardEasy =
+            {
+                {0,0,5,0,0,9,0,0,4},//2 on 0
+                {0,0,0,0,0,0,3,0,7},
+                {7,0,0,8,5,6,0,1,0},//6 on 5
+                {4,5,0,7,0,0,0,0,0},
+                {0,0,9,0,0,0,1,0,0},
+                {0,0,0,0,0,2,0,8,5},
+                {0,2,0,4,1,8,0,0,6},
+                {0,0,8,0,0,0,0,0,0}, //6 on 0
+                {1,9,0,2,0,0,7,0,8}
+            };
 
-            SudokuSolver sb = new SudokuSolver();
-            board = sb.solve(board);
+            int[,] boardMedium =
+            {
+                {0,0,6,0,9,0,2,0,0},
+                {0,0,0,7,0,2,0,0,0},
+                {0,9,0,5,0,8,0,7,0},
+                {9,0,0,0,3,0,0,0,6},
+                {7,5,0,0,0,0,0,1,9},
+                {1,0,0,0,4,0,0,0,5},
+                {0,1,0,3,0,9,0,8,0},
+                {0,0,0,2,0,1,0,0,0},
+                {0,0,9,0,8,0,1,0,0}
+            };
 
-            print(board);
+            int[,] boardHard =
+            {
+                {0,0,0,8,0,0,0,0,0},
+                {7,8,9,0,1,0,0,0,6},
+                {0,0,0,0,0,6,1,0,0}, // 1 on 7
+                {0,0,7,0,0,0,0,5,0},
+                {5,0,8,7,0,9,3,0,4},
+                {0,4,0,0,0,0,2,0,0},
+                {0,0,3,2,0,0,0,0,0},
+                {8,0,0,0,7,0,4,3,9},
+                {0,0,0,0,0,1,0,0,0}
+            };
+
+            SudokuSolver ss = new SudokuSolver();
+            board = boardHard;
+            ss.PrintBoard(board);
+
+            //ss.FindAllSolutions_9x9(board);
+            ss.FindAllSolutions(board);
+
+            int numberOfSolutions = ss.SolutionList.Count();
+            if (numberOfSolutions == 1)
+            {
+                Console.WriteLine("One solution");
+                ss.PrintSolutionList();
+            }
+            if (numberOfSolutions == 0) Console.WriteLine("No solutions");
+            if (numberOfSolutions > 1)
+            {
+                Console.WriteLine("Too many solutions");
+                ss.PrintSolutionList();
+            }
+         
             Console.ReadKey();
 
-        }
 
-        public static void print(int[,] board)
-        {
-            for (int i = 0; i < 9; i++)
-            {
-                for (int j = 0; j < 9; j++)
-                {
-                    Console.Write(board[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
         }
     }
 }
