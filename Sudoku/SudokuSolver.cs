@@ -18,6 +18,10 @@ namespace Sudoku
         }
 
         //Find all solutions for different size boards and store them in solutionList
+        /// <summary>
+        /// Finds all solutions and store them in SolutionList
+        /// </summary>
+        /// <param name="board"></param>
         public void FindAllSolutions(int[,] board)
         {
             int boardLength = board.GetLength(0);
@@ -49,6 +53,7 @@ namespace Sudoku
             if (isSolved)
             {
                 SolutionList.Add(CloneBoard(board));
+                Console.WriteLine(SolutionList.Count());
             }
             else
             {
@@ -66,56 +71,14 @@ namespace Sudoku
             }
         }
 
-        //Find all possible solutions of 9x9 board and store them in solutions list
-        public void FindAllSolutions_9x9(int[,] board)
-        {
-            int row = -1;
-            int col = -1;
-            bool isSolved = true;
 
-            //Check values in all boxes, whether empty box exists.
-            //If there is any empty box then set row and column values and break both loops.
-            for (int r = 0; r < 9; r++)
-            {
-                for (int c = 0; c < 9; c++)
-                {
-                    if (IsEmpty(board[r, c]))
-                    {
-                        isSolved = false;
-                        row = r;
-                        col = c;
-                        break;
-                    }
-                }
-                if (!isSolved)
-                {
-                    break;
-                }
-            }
-
-            //If is solved (no empty boxes) add solution to the list
-            if (isSolved)
-            {
-                SolutionList.Add(CloneBoard(board));    
-            }
-            else
-            {
-                //There are still empty boxes, find possible numbers to fill in 
-                for (int num = 1; num <= 9; num++)
-                {
-                    if (IsPossible(board, row, col, num))
-                    {
-                        board[row, col] = num;
-                        FindAllSolutions_9x9(board);
-                        //reset box for next try
-                        board[row, col] = 0;
-                    }
-                }
-            }
-        }
-
-        [Obsolete("Solve_9x9 is deprecated, please use FindAllSolutions_9x9 instead.")]
+        //[Obsolete("Solve_9x9 is deprecated, please use FindAllSolutions_9x9 instead.")]
         //Solve sudoku 9 x 9 and find only one solution, even if there is more
+        /// <summary>
+        /// Returns solution of given board
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
         public bool Solve_9x9(int[,] board)
         {
             int row = -1;
@@ -206,32 +169,18 @@ namespace Sudoku
             return false;
         }
 
-        /* ONLY FOR 9X9 BOARD SO FAR======================================================================================================================
-         * 
-        //Verify if the given number is present in square
+
+        //Check if given number is present in square. Length of the board must have integer square root.
+        //Boards 4x4, 9x9, 16x16 etc... are allowed. 
         private bool IsInSquare(int[,] board, int row, int col, int number)
-        {
-            int tempRow = row / 3 * 3;
-            int tempCol = col / 3 * 3;
+        { 
+            int sqrt = (int) Math.Sqrt(board.GetLength(0));
+            int tempRow = row / sqrt * sqrt;
+            int tempCol = col / sqrt * sqrt;
 
-            for (int r = tempRow; r < tempRow + 3; r++)
+            for (int r = tempRow; r < tempRow + sqrt; r++)
             {
-                for(int c = tempCol; c < tempCol + 3; c++)
-                {
-                    if (number == board[r, c]) return true;
-                }
-            }
-            return false;
-        }*/
-
-        private bool IsInSquare(int[,] board, int row, int col, int number)
-        {
-            int tempRow = row / 3 * 3;
-            int tempCol = col / 3 * 3;
-
-            for (int r = tempRow; r < tempRow + 3; r++)
-            {
-                for (int c = tempCol; c < tempCol + 3; c++)
+                for (int c = tempCol; c < tempCol + sqrt; c++)
                 {
                     if (number == board[r, c]) return true;
                 }
@@ -240,7 +189,7 @@ namespace Sudoku
         }
 
         //Clone 2d array of integers
-        private int[,] CloneBoard(int[,] board)
+        public int[,] CloneBoard(int[,] board)
         {
             int rows = board.GetLength(0);
             int columns = board.GetLength(1);
@@ -257,6 +206,10 @@ namespace Sudoku
         }
 
         //Print board to console
+        /// <summary>
+        /// Prints board given as parameter
+        /// </summary>
+        /// <param name="board"></param>
         public void PrintBoard(int[,] board)
         {
             for (int i = 0; i < board.GetLength(0); i++)
@@ -271,6 +224,9 @@ namespace Sudoku
         }
 
         //Print all solutions to console
+        /// <summary>
+        /// Prints list of solutions to console
+        /// </summary>
         public void PrintSolutionList()
         {
             for(int i =0; i< SolutionList.Count; i++)
