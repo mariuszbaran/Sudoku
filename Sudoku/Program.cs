@@ -25,14 +25,14 @@ namespace Sudoku
 
             int[,] boardEasy =
             {
-                {0,0,5,0,0,9,0,0,4},//2 on 0
+                {2,0,5,0,0,9,0,0,4},
                 {0,0,0,0,0,0,3,0,7},
-                {7,0,0,8,5,6,0,1,0},//6 on 5
+                {7,0,0,8,5,6,0,1,0},
                 {4,5,0,7,0,0,0,0,0},
                 {0,0,9,0,0,0,1,0,0},
                 {0,0,0,0,0,2,0,8,5},
                 {0,2,0,4,1,8,0,0,6},
-                {0,0,8,0,0,0,0,0,0}, //6 on 0
+                {6,0,8,0,0,0,0,0,0},
                 {1,9,0,2,0,0,7,0,8}
             };
 
@@ -53,7 +53,7 @@ namespace Sudoku
             {
                 {0,0,0,8,0,0,0,0,0},
                 {7,8,9,0,1,0,0,0,6},
-                {0,0,0,0,0,6,1,0,0}, // 1 on 7
+                {0,0,0,0,0,6,1,0,0},
                 {0,0,7,0,0,0,0,5,0},
                 {5,0,8,7,0,9,3,0,4},
                 {0,4,0,0,0,0,2,0,0},
@@ -73,7 +73,7 @@ namespace Sudoku
 
             int[,] board9 =
             {
-                {1,2,3, 4,5,6, 7,8,9},
+                {0,0,0, 0,0,0, 0,0,0},
                 {0,0,0, 0,0,0, 0,0,0},
                 {0,0,0, 0,0,0, 0,0,0},
 
@@ -86,7 +86,27 @@ namespace Sudoku
                 {0,0,0, 0,0,0, 0,0,0}
             };
 
-            //Manually canceled after 60 minutes
+            int[,] board16 =
+            {
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+
+            };
+
             int[,] board16_1 =
             {
                
@@ -111,7 +131,6 @@ namespace Sudoku
           /*16*/ {4,0,6,13,   0,0,0,0,   0,0,0,9,   0,16,0,0},
             };
 
-            //Manually cancelled after 5 minutes
             int[,] board16_2 =
             {
                
@@ -136,7 +155,6 @@ namespace Sudoku
           /*16*/ {4,0,6,13,   0,0,0,0,   0,0,0,9,   0,16,0,0},
             };
 
-            //Solved in a reasonable time :)
             int[,] board16_3 =
             {
                
@@ -161,29 +179,44 @@ namespace Sudoku
           /*16*/ {4,0,6,13,   15,7,10,14,   0,0,0,9,   0,16,0,0},
             };
 
-            SudokuSolver ss = new SudokuSolver();
-            board = board16_3;
-            ss.PrintBoard(board);
+            SudokuSolver sudoku = new SudokuSolver();
+            board = sudoku.Generate(9, 55);
+            Console.WriteLine("Generated board");
+            sudoku.PrintBoard(board);
+            sudoku.FindAllSolutions(board);
+            if(sudoku.SolutionList.Count == 1)
+            {
+                Console.WriteLine("Solved board");
+                sudoku.PrintBoard(sudoku.SolutionList[0]);
+            }
+            else
+            {
+                Console.WriteLine("Not possible to find correct solution");
+            }
 
-            //ss.FindAllSolutions_9x9(board);
-            ss.FindAllSolutions(board);
+            //sudoku.PrintBoard(sudoku.Generate_1(9, 7));
 
-            int numberOfSolutions = ss.SolutionList.Count();
+            /*
+            board = board16;
+            sudoku.PrintBoard(board);
+
+            sudoku.FindAllSolutions(board);
+
+            int numberOfSolutions = sudoku.SolutionList.Count();
             if (numberOfSolutions == 1)
             {
                 Console.WriteLine("One solution");
-                ss.PrintSolutionList();
+                sudoku.PrintSolutionList();
             }
             if (numberOfSolutions == 0) Console.WriteLine("No solutions");
             if (numberOfSolutions > 1)
             {
                 Console.WriteLine("Too many solutions");
-                ss.PrintSolutionList();
+                sudoku.PrintSolutionList();
             }
+            */
 
             Console.ReadKey();
-
-
         }
     }
 }
